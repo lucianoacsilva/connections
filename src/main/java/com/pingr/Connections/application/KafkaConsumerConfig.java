@@ -46,8 +46,7 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(
                 consumerConfig(),
                 new StringDeserializer(),
-                jsonDeserializer
-        );
+                jsonDeserializer);
     }
 
     @Bean
@@ -58,25 +57,22 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-
     // =======================
-
 
     public ConsumerFactory<String, AccountCreatedEvent> accountCreatedEventConsumerFactory() {
         JsonDeserializer<AccountCreatedEvent> jsonDeserializer = new JsonDeserializer<>(AccountCreatedEvent.class);
         jsonDeserializer.setUseTypeMapperForKey(true);
-        jsonDeserializer.addTrustedPackages("*");   // com.pingr.Accounts.Accounts.Account.java
-                                                    // com.pingr.Connection.core.Account.java
+        jsonDeserializer.addTrustedPackages("*"); // com.pingr.Accounts.Accounts.Account.java
+                                                  // com.pingr.Connection.core.Account.java
 
         return new DefaultKafkaConsumerFactory<>(
                 consumerConfig(),
                 new StringDeserializer(),
-                jsonDeserializer
-        );
+                jsonDeserializer);
     }
 
-    //                                                                          vamos lembrar deste nome     |
-    @Bean  //                                                                                                v
+    // vamos lembrar deste nome |
+    @Bean // v
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, AccountCreatedEvent>> accountCreatedEventKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, AccountCreatedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(accountCreatedEventConsumerFactory());
@@ -84,34 +80,30 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-
     // ==========================
-
 
     public ConsumerFactory<String, AccountDeletedEvent> accountDeletedEventConsumerFactory() {
         JsonDeserializer<AccountDeletedEvent> jsonDeserializer = new JsonDeserializer<>(AccountDeletedEvent.class);
         jsonDeserializer.setUseTypeMapperForKey(true);
-        jsonDeserializer.addTrustedPackages("*");   // com.pingr.Accounts.Accounts.Account.java
+        jsonDeserializer.addTrustedPackages("*");
+
+    public ConsumerFactory<String, AccountDeletedEvent> accountDeletedEventConsumerFactory() {
+        JsonDeserializer<AccountDeletedEvent> jsonDeserializer = new JsonDeserializer<>(AccountDeletedEvent.class);
+        jsonDeserializer.setUseTypeMapperForKey(true);
+        jsonDeserializer.addTrustedPackages("*"); // com.pingr.Accounts.Accounts.Account.java
         // com.pingr.Connection.core.Account.java
 
         return new DefaultKafkaConsumerFactory<>(
                 consumerConfig(),
                 new StringDeserializer(),
-                jsonDeserializer
-        );
+                jsonDeserializer);
     }
 
-    //                                                                          vamos lembrar deste nome     |
-    @Bean  //                                                                                                v
+    @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, AccountDeletedEvent>> accountDeletedEventKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, AccountDeletedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(accountDeletedEventConsumerFactory());
 
         return factory;
     }
-
-
-    // ==========================
-
-
 }
